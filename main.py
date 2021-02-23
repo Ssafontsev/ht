@@ -86,24 +86,40 @@ some_student.courses_in_progress += ['Python']
 some_student.finished_courses += ['FrontEND']
 some_student.finished_courses += ['C++']
 
+some_student1 = Student('Ivan', 'Ivanov', 'female')
+some_student1.courses_in_progress += ['Java']
+some_student1.courses_in_progress += ['C++']
+some_student1.finished_courses += ['FrontEND']
+some_student1.finished_courses += ['Python']
+
 some_lecturer = Lecturer('Some', 'Buddy')
 some_lecturer.courses_attached += ['Python']
-
 some_student.rate_lc(some_lecturer, 'Python', 10)
 some_student.rate_lc(some_lecturer, 'Python', 7)
 some_student.rate_lc(some_lecturer, 'Python', 8)
+
+some_lecturer1 = Lecturer('Mark', 'Jacobs')
+some_lecturer1.courses_attached += ['Java']
+some_student1.rate_lc(some_lecturer1, 'Java', 10)
+some_student1.rate_lc(some_lecturer1, 'Java', 7)
+some_student1.rate_lc(some_lecturer1, 'Java', 8)
 
 some_reviewer = Reviewer('Sam', 'Brown')
 some_reviewer.courses_attached += ['Python']
 some_reviewer.rate_hw(some_student, 'Python', 10)
 some_reviewer.rate_hw(some_student, 'Python', 7)
 
-print(some_student.grades)
-print()
-# print(some_lecturer.courses_attached)
-print(some_lecturer.grades)
+some_reviewer1 = Reviewer('Jack', 'Daniels')
+some_reviewer1.courses_attached += ['Java']
+some_reviewer1.rate_hw(some_student1, 'Java', 10)
+some_reviewer1.rate_hw(some_student1, 'Java', 7)
+
 
 print(some_lecturer)
 print()
+print(some_lecturer1)
+print()
 print(some_student)
-# print(some_student.get_average_grades())
+print()
+print(some_student1)
+print()
