@@ -21,7 +21,6 @@ class Student(PersonWithGrades):
         self.gender = gender
         self.finished_courses = []
         self.courses_in_progress = []
-        self.med_grades = {}
 
     def add_courses(self, course_name):
         self.finished_courses.append(course_name)
