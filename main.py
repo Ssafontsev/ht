@@ -41,6 +41,11 @@ class Student(PersonWithGrades):
                                                                                                     ''.join(
             self.courses_in_progress), ', '.join(self.finished_courses))
 
+    def __lt__(self, other):
+        if not isinstance(other, Student):
+            print('Not a student')
+        return self.get_average_grades() < other.get_average_grades()
+
 
 class Mentor:
     def __init__(self, name, surname):
@@ -56,11 +61,15 @@ class Lecturer(Mentor, PersonWithGrades):
         self.name = name
         self.surname = surname
         self.courses_attached = []
-        self.med_grades = {}
 
     def __str__(self):
         return 'Имя: {} \nФамилия: {} \nСредняя оценка за лекции: {}'.format(self.name, self.surname, self.
                                                                              get_average_grades())
+
+    def __lt__(self, other):
+        if not isinstance(other, Mentor):
+            print('Not a Mentor')
+        return self.get_average_grades() < other.get_average_grades()
 
 
 class Reviewer(Mentor):
@@ -82,6 +91,12 @@ class Reviewer(Mentor):
     def __str__(self):
         return 'Имя: {} \nФамилия: {}'.format(self.name, self.surname)
 
+    def __lt__(self, other):
+        if not isinstance(other, Mentor):
+            print('Not a Mentor')
+        return len(self.courses_attached) < len(other.courses_attached)
+
+
 some_student = Student('Ruoy', 'Eman', 'male')
 some_student.courses_in_progress += ['Git']
 some_student.courses_in_progress += ['Python']
@@ -96,7 +111,7 @@ some_student1.finished_courses += ['Python']
 
 some_lecturer = Lecturer('Some', 'Buddy')
 some_lecturer.courses_attached += ['Python']
-some_student.rate_lc(some_lecturer, 'Python', 10)
+some_student.rate_lc(some_lecturer, 'Python', 9)
 some_student.rate_lc(some_lecturer, 'Python', 7)
 some_student.rate_lc(some_lecturer, 'Python', 8)
 
@@ -108,8 +123,8 @@ some_student1.rate_lc(some_lecturer1, 'Java', 8)
 
 some_reviewer = Reviewer('Sam', 'Brown')
 some_reviewer.courses_attached += ['Python']
-some_reviewer.rate_hw(some_student, 'Python', 10)
-some_reviewer.rate_hw(some_student, 'Python', 7)
+some_reviewer.rate_hw(some_student, 'Python', 9)
+some_reviewer.rate_hw(some_student, 'Python', 6)
 
 some_reviewer1 = Reviewer('Jack', 'Daniels')
 some_reviewer1.courses_attached += ['Java']
@@ -128,3 +143,9 @@ print()
 print(some_reviewer)
 print()
 print(some_reviewer1)
+print()
+print(some_lecturer > some_lecturer1)
+
+print(some_student > some_student1)
+
+print(some_reviewer > some_reviewer1)
