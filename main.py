@@ -79,6 +79,8 @@ class Reviewer(Mentor):
         else:
             return 'Ошибка'
 
+    def __str__(self):
+        return 'Имя: {} \nФамилия: {}'.format(self.name, self.surname)
 
 some_student = Student('Ruoy', 'Eman', 'male')
 some_student.courses_in_progress += ['Git']
@@ -123,3 +125,6 @@ print(some_student)
 print()
 print(some_student1)
 print()
+print(some_reviewer)
+print()
+print(some_reviewer1)
