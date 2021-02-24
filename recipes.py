@@ -1,8 +1,10 @@
 with open('recipes.txt') as f:
   cookbook = dict
-  data = f.read()
-  print(type(data))
-  print(data)
+  name = print(f.readline().strip())
+  print(name)
+  ingr_count = int(f.readline().strip())
+  for x in range(ingr_count):
+    print(f.readline().split('|'))
 
 # data += '\nЕще одна строка'
 # print(data)
