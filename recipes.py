@@ -1,3 +1,4 @@
+
 with open('recipes.txt') as f:
   cookbook = dict
   name = print(f.readline().strip())
