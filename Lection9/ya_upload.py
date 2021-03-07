@@ -3,7 +3,6 @@ import requests
 
 class YaUploader:
     def __init__(self, token: str):
-        self.file_path = '/py-homework-basic-files/dZein0z.gif'
         self.token = token
 
     def upload(self, file_path: str):
@@ -23,4 +22,4 @@ class YaUploader:
 
 if __name__ == '__main__':
     uploader = YaUploader('AgAAAAAFUtBvAADLW9PeWz8n60-6pVQMaShIHPQ')
-    result = uploader.upload('/Users/sergeisafontsev/PycharmProjects/pythonProject/py-homework-basic-files/dZein0z.gif')
+    result = uploader.upload('/Users/sergeisafontsev/PycharmProjects/pythonProject/dZein0z.gif')
