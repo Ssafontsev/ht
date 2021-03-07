@@ -1,1 +1,3 @@
-# ht_student_mentor
+# Домашнее задание к лекции 9.«Работа с библиотекой requests, http-запросы»
+- Задание 1 файл _superheroes.py_
+- Задание 2 файл _ya_upload.py_
