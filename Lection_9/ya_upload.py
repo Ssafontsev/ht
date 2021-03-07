@@ -22,4 +22,4 @@ class YaUploader:
 
 if __name__ == '__main__':
     uploader = YaUploader('AgAAAAAFUtBvAADLW9PeWz8n60-6pVQMaShIHPQ')
-    result = uploader.upload('/Users/sergeisafontsev/PycharmProjects/pythonProject/dZein0z.gif')
+    result = uploader.upload('dZein0z.gif')
