@@ -1,6 +1,4 @@
 import requests
-
-
 class YaUploader:
     def __init__(self, token: str):
         self.token = token
@@ -18,8 +16,6 @@ class YaUploader:
         if response.status_code == 200:
             print('Успешная выгрузка файла')
         return
-
-
 if __name__ == '__main__':
-    uploader = YaUploader('AgAAAAAFUtBvAADLW9PeWz8n60-6pVQMaShIHPQ')
+    uploader = YaUploader('TOKEN')
     uploader.upload('dZein0z.gif')
