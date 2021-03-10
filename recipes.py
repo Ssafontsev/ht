@@ -2,7 +2,7 @@ from pprint import pprint
 
 def create_dict_from_file(file_name):
     cook_dict = {}
-    with open(file_name) as file_work:
+    with open(file_name, encoding='utf-8') as file_work:
         for line in file_work:
             dish_name = line.lower().strip().capitalize()
             counter = int(file_work.readline())
