@@ -26,28 +26,33 @@ class VkUser:
         followers_params = {
             'album_id': 'profile',
             'count': 10,
-            'user_id': user_id
+            'user_id': user_id,
+            'extended': 1
         }
         res = requests.get(followers_url, params={**self.params, **followers_params}).json()['response']['items']
         dict_url = {}
         list_url = []
+        res_dict = {}
         for line in res:
             dict_url.update(line)
             list_url.append(dict_url['sizes'][-1]['url'])
-            # pprint(line)
+            # pprint(line['likes']['count'])
+            # pprint(dict_url['sizes'][-1]['url'])
+            # res_dict.update({(line['likes']['count']): dict_url['sizes'][-1]['url']})
+        # pprint(res_dict)
 
         return list_url
 
 vk_client = VkUser(token, '5.130')
 vk_client.get_photos_links()
-num = 0
-for link in vk_client.get_photos_links():
-
-    num += 1
-    response = requests.post('https://cloud-api.yandex.net/v1/disk/resources/upload',
-                        params={'path': num,
-                                'url': link},
-                        headers={'Authorization': f'OAuth {yatoken}'})
+# num = 0
+# for link in vk_client.get_photos_links():
+#
+#     num += 1
+#     response = requests.post('https://cloud-api.yandex.net/v1/disk/resources/upload',
+#                         params={'path': num,
+#                                 'url': link},
+#                         headers={'Authorization': f'OAuth {yatoken}'})
 
 
 
