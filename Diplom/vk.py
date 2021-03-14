@@ -1,9 +1,9 @@
 import requests
 from pprint import pprint
 
-with open('token.txt') as file_object:
+with open('Diplom/token.txt') as file_object:
     token = file_object.read().strip()
-with open('yatoken.txt') as f:
+with open('Diplom/yatoken.txt') as f:
     yatoken = f.read().strip()
 
 class VkUser:
@@ -39,13 +39,15 @@ class VkUser:
         return list_url
 
 vk_client = VkUser(token, '5.130')
-pprint(vk_client.get_photos_links())
+vk_client.get_photos_links()
+num = 0
+for link in vk_client.get_photos_links():
 
-# for link in vk_client.get_photos_links():
-#     response = requests.post('https://cloud-api.yandex.net/v1/disk/resources/upload',
-#                         params={'path': 2,
-#                                 'url': link},
-#                         headers={'Authorization': f'OAuth {yatoken}'})
+    num += 1
+    response = requests.post('https://cloud-api.yandex.net/v1/disk/resources/upload',
+                        params={'path': num,
+                                'url': link},
+                        headers={'Authorization': f'OAuth {yatoken}'})
 
 
 
