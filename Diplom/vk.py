@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 from pprint import pprint
 
 with open('Diplom/token.txt') as file_object:
@@ -15,7 +16,6 @@ class VkUser:
         self.params = {
             'access_token': self.token,
             'v': self.version,
-
         }
         self.owner_id = requests.get(self.url+'users.get', self.params).json()['response'][0]['id']
 
@@ -32,27 +32,33 @@ class VkUser:
         res = requests.get(followers_url, params={**self.params, **followers_params}).json()['response']['items']
         dict_url = {}
         list_url = []
-        res_dict = {}
+        res_list = []
         for line in res:
             dict_url.update(line)
             list_url.append(dict_url['sizes'][-1]['url'])
-            # pprint(line['likes']['count'])
-            # pprint(dict_url['sizes'][-1]['url'])
-            # res_dict.update({(line['likes']['count']): dict_url['sizes'][-1]['url']})
-        # pprint(res_dict)
-
-        return list_url
+            res_list.append({str(line['likes']['count']): dict_url['sizes'][-1]['url']})
+        return res_list
 
 vk_client = VkUser(token, '5.130')
 vk_client.get_photos_links()
-# num = 0
-# for link in vk_client.get_photos_links():
-#
-#     num += 1
-#     response = requests.post('https://cloud-api.yandex.net/v1/disk/resources/upload',
-#                         params={'path': num,
-#                                 'url': link},
-#                         headers={'Authorization': f'OAuth {yatoken}'})
+dict_keys = {}
+for line in vk_client.get_photos_links():
+
+    dict_keys.update(line)
+
+# pprint(dict_keys)
+for x,y in dict_keys.items():
+    if list(dict_keys.keys()).count(x) > 1:
+        print(x,y)
+    print(dict_keys.keys())
+        # for like, link in line.items():
+    #     if like.count(like)>1:
+    #         print(like)
+
+        # response = requests.post('https://cloud-api.yandex.net/v1/disk/resources/upload',
+        #                         params={'path': f'{like}.jpg',
+        #                                 'url': link},
+        #                         headers={'Authorization': f'OAuth {yatoken}'})
 
 
 
