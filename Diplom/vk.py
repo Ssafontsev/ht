@@ -32,25 +32,28 @@ class VkUser:
         res = requests.get(followers_url, params={**self.params, **followers_params}).json()['response']['items']
         dict_url = {}
         list_url = []
-        res_list = []
+        list_like = []
+        # res_list = []
         for line in res:
             dict_url.update(line)
             list_url.append(dict_url['sizes'][-1]['url'])
-            res_list.append({str(line['likes']['count']): dict_url['sizes'][-1]['url']})
-        return res_list
+            # res_list.append({str(line['likes']['count']): dict_url['sizes'][-1]['url']})
+            list_url.append(line['likes']['count'])
+        # print(list_url)
+        return list_url
 
 vk_client = VkUser(token, '5.130')
 vk_client.get_photos_links()
-dict_keys = {}
+# dict_keys = {}
 for line in vk_client.get_photos_links():
-
-    dict_keys.update(line)
+    if
+    # dict_keys.update(line)
 
 # pprint(dict_keys)
-for x,y in dict_keys.items():
-    if list(dict_keys.keys()).count(x) > 1:
-        print(x,y)
-    print(dict_keys.keys())
+# for x,y in dict_keys.items():
+#     if list(dict_keys.keys()).count(x) > 1:
+#         print(x,y)
+#     print(dict_keys.keys())
         # for like, link in line.items():
     #     if like.count(like)>1:
     #         print(like)
