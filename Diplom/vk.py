@@ -1,9 +1,9 @@
 import requests
 from pprint import pprint
 
-with open('Diplom/token.txt') as file_object:
+with open('token.txt') as file_object:
     token = file_object.read().strip()
-with open('Diplom/yatoken.txt') as f:
+with open('yatoken.txt') as f:
     yatoken = f.read().strip()
 
 class VkUser:
@@ -29,23 +29,26 @@ class VkUser:
             'extended': 1
         }
         res = requests.get(followers_url, params={**self.params, **followers_params})
-        photos_list = res.json()['response']['items']
+
+        complete_list = res.json()['response']['items']
         photos_to_upload = []
-        url_and_names_to_upload = []
-        for photo in photos_list:
-            about_photo = {}
-            quantity_likes = photo['likes']['count']
-            photo_date = photo['date']
-            max_size_photo = photo['sizes'][-1]
-            photo_name = f'{quantity_likes}.jpg'
+        url_names = []
+        for line in complete_list:
+            photo_info = {}
+            qty_likes = line['likes']['count']
+            photo_date = line['date']
+            biggest_photo = line['sizes'][-1]
+            photo_name = f'{qty_likes}.jpg'
             for item in photos_to_upload:
                 if item['file_name'] == photo_name:
-                    photo_name = f'{quantity_likes}_{photo_date}.jpg'
-            url_and_names_to_upload.append([max_size_photo['url'], photo_name])
-            about_photo['file_name'] = photo_name
-            about_photo['size'] = max_size_photo['type']
-            photos_to_upload.append(about_photo)
-        return url_and_names_to_upload
+                    photo_name = f'{qty_likes}_{photo_date}.jpg'
+            url_names.append([biggest_photo['url'], photo_name])
+            photo_info['file_name'] = photo_name
+            photo_info['size'] = biggest_photo['type']
+            print(photo_info)
+            photos_to_upload.append(photo_info)
+
+        return url_names
 
 vk_client = VkUser(token, '5.130')
 vk_client.get_photos_links()
@@ -53,11 +56,11 @@ vk_client.get_photos_links()
 
 
 
-for link, name in vk_client.get_photos_links():
-    response = requests.post('https://cloud-api.yandex.net/v1/disk/resources/upload',
-                             params={'path': name,
-                                     'url': link},
-                             headers={'Authorization': f'OAuth {yatoken}'})
+# for link, name in vk_client.get_photos_links():
+#     response = requests.post('https://cloud-api.yandex.net/v1/disk/resources/upload',
+#                              params={'path': name,
+#                                      'url': link},
+#                              headers={'Authorization': f'OAuth {yatoken}'})
 
 
 # class YaUploader:
