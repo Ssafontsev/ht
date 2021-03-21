@@ -1,0 +1,6 @@
+.DS_Store
+.idea/
+venv/
+py-homework-basic-files/
+token.txt
+yatoken.txt
