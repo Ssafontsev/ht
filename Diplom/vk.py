@@ -4,23 +4,26 @@ from tqdm import tqdm
 
 with open('Diplom/token.txt') as file_object:
     token = file_object.read().strip()
-with open('Diplom/yatoken.txt') as f:
-    yatoken = f.read().strip()
+# with open('Diplom/yatoken.txt') as f:
+#     yatoken = f.read().strip()
 
-user_id = 1771761#input('Введите user_id: ')
-# yatoken = input('Введите ваш токен с полигона Яндекс: ')
+user_id = str(input('Введите user_id: '))
+
+
+yatoken = str(input('Введите ваш токен с полигона Яндекс: '))
 
 class VkUser:
     url = 'https://api.vk.com/method/'
-    def __init__(self, token, version, user_id=None):
-        self.token = token
+
+    def __init__(self, token1, version, user_id=None):
+        self.token = token1
         self.version = version
         self.user_id = user_id
         self.params = {
             'access_token': self.token,
             'v': self.version,
         }
-        self.owner_id = requests.get(self.url+'users.get', self.params).json()['response'][0]['id']
+        self.owner_id = requests.get(self.url + 'users.get', self.params).json()['response'][0]['id']
 
     def get_photos_links(self, user_id: str):
         if user_id is None:
@@ -33,11 +36,6 @@ class VkUser:
             'extended': 1
         }
         res = requests.get(followers_url, params={**self.params, **followers_params})
-        # print(res.json())
-        # response = res['response']
-        # print()
-        # self.user_id1 = response[0]['id']
-        # self.user_info = f'{response[0]["first_name"]} {response[0]["last_name"]}'
         complete_list = res.json()['response']['items']
         photos_to_upload = []
         url_names = []
@@ -56,29 +54,26 @@ class VkUser:
             photos_to_upload.append(photo_info)
         return url_names
 
+
 class YaUploader:
     def __init__(self, yatoken: str):
         self.yatoken = yatoken
 
     def create_dir(self, user_id):
-        """
-        Создает папку на яндекс диске
-        """
+        """Создает папку на яндекс диске"""
         url = 'https://cloud-api.yandex.net/v1/disk/resources'
         params = {'path': user_id}
         headers = {'Authorization': self.yatoken}
         response = requests.put(url, params=params, headers=headers)
         # проверка выполнения создания папки
         if response.status_code == 201:
-            print(f'Папка "{user_id}" создана на яндекс диске!')
+            print(f'Папка "{user_id}" создана на диске.')
         else:
             error_message = response.json()['message']
-            print(f'Что-то пошло не так! Код - {response.status_code}: {error_message}')
+            print(f'Ошибка код - {response.status_code}: {error_message}')
 
-    def upload(self, file_path:str):
+    def upload(self, file_path: str):
         """Метод загружает файл на яндекс диск"""
-        # file_name = vk_client.get_photos_links()#file_path.split('/')[-1]
-        # token = self.token
         for link, name in vk_client.get_photos_links(user_id):
             response = requests.post('https://cloud-api.yandex.net/v1/disk/resources/upload',
                                      params={'path': f"{user_id}/{name}",
@@ -86,7 +81,6 @@ class YaUploader:
                                      headers={'Authorization': f'OAuth {self.yatoken}'})
             for i in tqdm(vk_client.get_photos_links(user_id)):
                 if response.status_code == 202:
-                # print('Успешная выгрузка файла')
                     time.sleep(1)
         return
 
@@ -96,4 +90,3 @@ vk_client = VkUser(token, '5.130')
 uploader = YaUploader(yatoken)
 uploader.create_dir(user_id)
 uploader.upload(vk_client.get_photos_links(user_id))
-
