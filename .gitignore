@@ -2,5 +2,5 @@
 .idea/
 venv/
 py-homework-basic-files/
-Diplom/token.txt
-Diplom/yatoken.txt
+token.txt
+yatoken.txt
