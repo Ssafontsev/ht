@@ -43,7 +43,7 @@ class VkUser:
             photo_info['file_name'] = photo_name
             photo_info['size'] = biggest_photo['type']
             photos_to_upload.append(photo_info)
-        with open('Diplom/about_photos.json', 'w') as json_file:
+        with open('about_photos.json', 'w') as json_file:
             json.dump(photos_to_upload, json_file)
         return url_names
 
