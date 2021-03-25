@@ -76,16 +76,11 @@ class YaUploader:
 
 
 if __name__ == '__main__':
-    with open('Diplom/token.txt') as file_object:
-        tokenvk = file_object.read().strip()
-    with open('Diplom/yatoken.txt') as f:
-        yatoken = f.read().strip()
     user_id_input = str(input('Введите user_id: '))
     qty_photos_input = str(input('Введите количество фото для загрузки: '))
-    # yatoken = str(input('Введите ваш токен с полигона Яндекс: '))
-    # tokenvk = str(input('Введите ваш токен VK: '))
+    yatoken = str(input('Введите ваш токен с полигона Яндекс: '))
+    tokenvk = str(input('Введите ваш токен VK: '))
     vk_client = VkUser(tokenvk, '5.130')
-    # vk_client.get_photos_links(user_id_input, qty_photos_input)
     listoflinks = vk_client.get_photos_links(user_id_input, qty_photos_input)
     uploader = YaUploader(yatoken, user_id_input)
     uploader.create_dir()
