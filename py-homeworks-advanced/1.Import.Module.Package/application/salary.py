@@ -1,3 +1,3 @@
 def calculate_salary():
-    print(calculate_salary())
-    pass
+    print("calculate_salary")
+
